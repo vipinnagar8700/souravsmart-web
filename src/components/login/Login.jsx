@@ -264,6 +264,7 @@ export function Login({ showLogin, setShowLogin, setMobileActiveKey }) {
   };
 
   const handleOtpVerification = async (e) => {
+    console.log("Vipin@123")
     e.preventDefault();
     if (otp == "") {
       toast.error(t("otp_required"));
@@ -291,13 +292,14 @@ export function Login({ showLogin, setShowLogin, setMobileActiveKey }) {
       try {
         const response = await api.verifyOTP({
           mobile: phoneNumberWithoutCountryCode,
-          country_code: `+${countryCode}`,
+          country_code: `${countryCode}`,
           otp: otp,
         });
         if (
           response?.status == 1 &&
           response?.message ==
           t("otp_valid_but_user_invalid")
+
         ) {
           setShowNewUser(true);
           setShowLogin(false);
@@ -306,6 +308,7 @@ export function Login({ showLogin, setShowLogin, setMobileActiveKey }) {
           setPhoneNumber(mobileNo);
           setUserName("");
           setEmail("");
+          toast.error(t("otp_valid_but_user_invalid") || "OTP valid, but user not registered.");
         } else if (response?.status == 1) {
           const tokenSet = await dispatch(
             setTokenThunk(res?.data?.access_token)
@@ -330,10 +333,12 @@ export function Login({ showLogin, setShowLogin, setMobileActiveKey }) {
           setLoading(false);
           setIsOTP(false);
           setShowLogin(false);
+          toast.success(t("login_success") || "Login successful.");
         } else {
-          toast.error()
+          toast.error(t("invalid_otp") || "Invalid OTP. Please try again.");
         }
       } catch (error) {
+        toast.error(t("something_went_wrong") || "Something went wrong. Please try again.");
         console.log("error", error);
       }
     }
