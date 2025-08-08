@@ -454,7 +454,7 @@ const Checkout = () => {
       String(checkout?.selectedPaymentMethod).slice(1);
     const status =
       checkout?.selectedPaymentMethod === "COD" ||
-      checkout?.selectedPaymentMethod === "wallet"
+        checkout?.selectedPaymentMethod === "wallet"
         ? 2
         : 1;
     try {
@@ -553,6 +553,7 @@ const Checkout = () => {
           } else {
             dispatch(clearCartPromo());
             //  payment methods redirect urls
+            console.log(response?.data, "Vipin@1234")
             const paymentUrls = {
               cashfree: response?.data?.redirectUrl,
               phonepe: response?.data?.redirectUrl,
@@ -560,8 +561,10 @@ const Checkout = () => {
               paypal: response?.data?.paypal_redirect_url,
               midtrans: response?.data?.snapUrl,
             };
+            console.log(checkout, "Vipin@123")
             // Select specific paymentUrls
             const redirectUrl = paymentUrls[checkout?.selectedPaymentMethod];
+            console.log(redirectUrl, "redirectUrl")
             if (redirectUrl) {
               router.push(redirectUrl);
             } else {
