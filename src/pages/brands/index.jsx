@@ -1,5 +1,5 @@
 import MetaData from '@/components/metadata-component/MetaData'
-const BrandsPage = dynamic(()=>import('@/components/pagecomponents/BrandsPage'),{ssr:false})
+const BrandsPage = dynamic(() => import('@/components/pagecomponents/BrandsPage'), { ssr: false })
 import dynamic from 'next/dynamic'
 import React from 'react'
 
